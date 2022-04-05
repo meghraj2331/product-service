@@ -1,5 +1,6 @@
 package com.edusol.product.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,11 +13,22 @@ public class Product {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@Column(name="Type")
 	private String type;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="amount")
     private Double amount;
+	
+	@Column(name="quantity")
     private int quantity;
-    private String description;
+	
+	
+    @Column(name="description")
+	private String description;
     
     
 	public Product() {
