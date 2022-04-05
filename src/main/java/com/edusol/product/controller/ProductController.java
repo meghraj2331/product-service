@@ -3,6 +3,8 @@ package com.edusol.product.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,30 +25,43 @@ public class ProductController {
 	private ProductService productservice;
 
 	@PostMapping
-	public String addProduct(@RequestBody Product product) {
+	public ResponseEntity<String> addProduct(@RequestBody Product product) {
 
-		return productservice.addProduct(product);
+		return new ResponseEntity<String> (productservice.addProduct(product),HttpStatus.CREATED);
 	}
 
 	@GetMapping
-	public List<Product> getProduct() {
-		return productservice.getProduct();
+	public ResponseEntity<List<Product>>  getProduct() {
+		return new ResponseEntity<List<Product>> (productservice.getProduct(),HttpStatus.OK);
 	}
 
 	@PutMapping
-	public String updateProduct(@RequestBody Product product) {
-		return productservice.updateProduct(product);
+	public ResponseEntity<String> updateProduct(@RequestBody Product product) {
+		return new ResponseEntity<String> (productservice.updateProduct(product),HttpStatus.ACCEPTED);
 	}
 
-	@GetMapping("/{name}")
-	public List<Product> findByName(@PathVariable String name) {
-		return productservice.findByName(name);
+	@GetMapping("findN/{name}")
+	public ResponseEntity<List<Product>> findProductByName(@PathVariable String name) {
+		return new ResponseEntity<List<Product>> (productservice.findProductByName(name),HttpStatus.FOUND);
 	}
      
-	@RequestMapping("/find/{type}")
-	public List<Product>findByType(@PathVariable String type){
-		return productservice.findByType(type);
+	@GetMapping("/findT/{type}")
+	public ResponseEntity<List<Product>> findProductByType(@PathVariable String type){
+		return new ResponseEntity<List<Product>> (productservice.findProductByType(type),HttpStatus.FOUND);
 	}
+	
+	@DeleteMapping("/deleteN/{name}")
+	public ResponseEntity<String> deleteProductByName(@PathVariable String name)
+	{
+		return  productservice.deleteProductByName(name);
+	}
+	
+	@DeleteMapping("/deleteT/{type}")
+	 public ResponseEntity<String>  deleteProductByType(@PathVariable String type)
+     {
+    	 return productservice.deleteProductByType(type);
+    	 
+     }
 	
 	
 }
